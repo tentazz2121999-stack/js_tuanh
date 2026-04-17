@@ -10,17 +10,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-        <form action="" method="post">
-            <input type="email" name="username" id="" placeholder="Username"><br>
-            <input type="password" name="password" id="" placeholder="Password"><br>
-            
-            <input type="radio" name="gender" id="gender" value="Male"> Male<br>
-            <input type="radio" name="gender" id="gender" value="Female"> Female<br>
+        <div class="container-fluid">
+            <form action="" method="post">
+                <input type="email" name="username" id="" placeholder="Username"><br>
+                <input type="password" name="password" id="" placeholder="Password"><br>
+                
+                <input type="radio" name="gender" id="gender" value="Male"> Male<br>
+                <input type="radio" name="gender" id="gender" value="Female"> Female<br>
 
-            <input type="checkbox" name="hobby" id="hobby" value="Game"> Game<br>
-            <input type="checkbox" name="hobby" id="hobby" value="Music"> Music<br>
-            <input type="submit" value="Login">
-        </form>
+                <input type="checkbox" name="hobby" id="hobby" value="Game"> Game<br>
+                <input type="checkbox" name="hobby" id="hobby" value="Music"> Music<br>
+
+                <textarea name="description" id="description" cols="30" rows="10">Nội dung mô tả</textarea><br>
+                <!-- <input type="submit" value="Login"> -->
+                 <button onclick="alert('Bạn đã đăng ký thành công!')">Login</button>
+            </form>
+        </div>
+        
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
