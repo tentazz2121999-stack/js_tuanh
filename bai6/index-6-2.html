@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <style>
+        .result {
+            color: black;
+        }
+    </style>
     <script src="scripts.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -18,20 +23,23 @@
     <h3 id="message">Chào mọi người</h3>
     <button onclick="doimau()">Đổi màu</button>
     <button onclick="innoidung()">in nội dung</button>
-    <button onclick="innoidungcu()">in nội dung cũ</button>
+    <button onclick="innoidungcu()">in nội dung cũ</button><br>
 
-    <button onclick="phepcong()">thực hiện phép cộng</button>
-    <button onclick="pheptru()">thực hiện phép trừ</button>
-    <button onclick="phepnhan()">thực hiện phép nhân</button>
-    <button onclick="phepchia()">thực hiện phép chia</button>
+    <input type="number" id="a" placeholder="Nhập số a"> <br>
+    <input type="number" id="b" placeholder="Nhập số b"> <br>
 
-    <input type="number" id="a" placeholder="Nhập số a">
-    <input type="number" id="b" placeholder="Nhập số b">
+    <button onclick="phepcong()">thực hiện phép cộng</button> <br>
+    <button onclick="pheptru()">thực hiện phép trừ</button> <br>
+    <button onclick="phepnhan()">thực hiện phép nhân</button> <br>
+    <button onclick="phepchia()">thực hiện phép chia</button> <br>
+    <button onclick="doiMauKetQua()">Đổi màu kết quả</button> <br>
+    <button onclick="changeColor()">Đổi màu</button>
+
     <p id="result"></p>
     <script>
 
 
-        
+
 
         function doimau() {
             let message = document.getElementById("message");
@@ -56,6 +64,7 @@
             let a = document.getElementById("a").value;
             let b = document.getElementById("b").value;
             let result = parseFloat(a) + parseFloat(b);
+            document.getElementById("result").style.color = "green";
             document.getElementById("result").innerHTML = "Kết quả phép cộng: " + result;
         }
 
@@ -63,6 +72,7 @@
             let a = document.getElementById("a").value;
             let b = document.getElementById("b").value;
             let result = a - b;
+            document.getElementById("result").style.color = "green";
             document.getElementById("result").innerHTML = "Kết quả phép trừ: " + result;
         }
 
@@ -70,6 +80,7 @@
             let a = document.getElementById("a").value;
             let b = document.getElementById("b").value;
             let result = a * b;
+            document.getElementById("result").style.color = "green";
             document.getElementById("result").innerHTML = "Kết quả phép nhân: " + result;
         }
 
@@ -77,7 +88,28 @@
             let a = document.getElementById("a").value;
             let b = document.getElementById("b").value;
             let result = a / b;
+            document.getElementById("result").style.color = "green";
             document.getElementById("result").innerHTML = "Kết quả phép chia: " + result;
+        }
+
+        function doiMauKetQua() {
+            let result = document.getElementById("result");
+            if (result.style.color === "green" || result.style.color === "") {
+                result.style.color = "red";
+            } else {
+                result.style.color = "green";
+            }
+        }
+
+        function changeColor() {
+            var result = document.getElementById("result");
+            var currentColor = result.style.color;
+            var newColor = prompt("Nhập màu mới (ví dụ: red, blue, green):");
+            if (newColor) {
+                result.style.color = newColor;
+            } else {
+                result.style.color = currentColor;
+            }
         }
     </script>
     <!-- Optional JavaScript -->
