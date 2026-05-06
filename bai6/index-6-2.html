@@ -14,6 +14,12 @@
 </head>
 
 <body>
+
+    <h3 id="message">Chào mọi người</h3>
+    <button onclick="doimau()">Đổi màu</button>
+    <button onclick="innoidung()">in nội dung</button>
+    <button onclick="innoidungcu()">in nội dung cũ</button>
+
     <button onclick="phepnhan()">thực hiện phép nhân</button>
     <input type="number" id="a" placeholder="Nhập số a">
     <input type="number" id="b" placeholder="Nhập số b">
@@ -28,16 +34,24 @@
             document.getElementById("result").innerHTML = "Kết quả phép nhân: " + result;
         }
 
-        function myage(){
-            return 38;
+        function doimau() {
+            let message = document.getElementById("message");
+            if (message.style.color === "red") {
+                message.style.color = "blue";
+            } else {
+                message.style.color = "red";
+            }
         }
-        function yourage(yourbirthyear){
-            return 2026 - yourbirthyear;
+
+        function innoidung() {
+            let message = document.getElementById("message").innerHTML = "Chào tất cả mọi người";
+            console.log(message);
         }
-        let x = myage() + yourage(1990);
-        let y = yourage(myage());
-        console.log(x);
-        console.log(y);
+
+        function innoidungcu() {
+            let message = document.getElementById("message").innerHTML = "Chào mọi người";
+            console.log(message);
+        }
     </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
