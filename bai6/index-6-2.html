@@ -20,19 +20,18 @@
     <button onclick="innoidung()">in nội dung</button>
     <button onclick="innoidungcu()">in nội dung cũ</button>
 
+    <button onclick="phepcong()">thực hiện phép cộng</button>
+    <button onclick="pheptru()">thực hiện phép trừ</button>
     <button onclick="phepnhan()">thực hiện phép nhân</button>
+    <button onclick="phepchia()">thực hiện phép chia</button>
+
     <input type="number" id="a" placeholder="Nhập số a">
     <input type="number" id="b" placeholder="Nhập số b">
     <p id="result"></p>
     <script>
 
 
-        function phepnhan() {
-            let a = document.getElementById("a").value;
-            let b = document.getElementById("b").value;
-            let result = a * b;
-            document.getElementById("result").innerHTML = "Kết quả phép nhân: " + result;
-        }
+        
 
         function doimau() {
             let message = document.getElementById("message");
@@ -51,6 +50,34 @@
         function innoidungcu() {
             let message = document.getElementById("message").innerHTML = "Chào mọi người";
             console.log(message);
+        }
+
+        function phepcong() {
+            let a = document.getElementById("a").value;
+            let b = document.getElementById("b").value;
+            let result = parseFloat(a) + parseFloat(b);
+            document.getElementById("result").innerHTML = "Kết quả phép cộng: " + result;
+        }
+
+        function pheptru() {
+            let a = document.getElementById("a").value;
+            let b = document.getElementById("b").value;
+            let result = a - b;
+            document.getElementById("result").innerHTML = "Kết quả phép trừ: " + result;
+        }
+
+        function phepnhan() {
+            let a = document.getElementById("a").value;
+            let b = document.getElementById("b").value;
+            let result = a * b;
+            document.getElementById("result").innerHTML = "Kết quả phép nhân: " + result;
+        }
+
+        function phepchia() {
+            let a = document.getElementById("a").value;
+            let b = document.getElementById("b").value;
+            let result = a / b;
+            document.getElementById("result").innerHTML = "Kết quả phép chia: " + result;
         }
     </script>
     <!-- Optional JavaScript -->
