@@ -28,10 +28,10 @@
     <input type="number" id="a" placeholder="Nhập số a"> <br>
     <input type="number" id="b" placeholder="Nhập số b"> <br>
 
-    <button onclick="phepcong()">thực hiện phép cộng</button> <br>
-    <button onclick="pheptru()">thực hiện phép trừ</button> <br>
-    <button onclick="phepnhan()">thực hiện phép nhân</button> <br>
-    <button onclick="phepchia()">thực hiện phép chia</button> <br>
+    <button onclick="pheptinh('cong')">cộng</button> <br>
+    <button onclick="pheptinh('tru')">trừ</button> <br>
+    <button onclick="pheptinh('nhan')">nhân</button> <br>
+    <button onclick="pheptinh('chia')">chia</button> <br>
     <button onclick="doiMauKetQua()">Đổi màu kết quả</button> <br>
     <button onclick="changeColor()">Đổi màu</button>
 
@@ -57,36 +57,56 @@
             console.log(message);
         }
 
-        function phepcong() {
-            let a = document.getElementById("a").value;
-            let b = document.getElementById("b").value;
-            let result = parseFloat(a) + parseFloat(b);
-            document.getElementById("result").style.color = "green";
-            document.getElementById("result").innerHTML = "Kết quả phép cộng: " + result;
-        }
+        // function phepcong() {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let result = parseFloat(a) + parseFloat(b);
+        //     document.getElementById("result").style.color = "green";
+        //     document.getElementById("result").innerHTML = "Kết quả phép cộng: " + result;
+        // }
 
-        function pheptru() {
-            let a = document.getElementById("a").value;
-            let b = document.getElementById("b").value;
-            let result = a - b;
-            document.getElementById("result").style.color = "green";
-            document.getElementById("result").innerHTML = "Kết quả phép trừ: " + result;
-        }
+        // function pheptru() {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let result = a - b;
+        //     document.getElementById("result").style.color = "green";
+        //     document.getElementById("result").innerHTML = "Kết quả phép trừ: " + result;
+        // }
 
-        function phepnhan() {
-            let a = document.getElementById("a").value;
-            let b = document.getElementById("b").value;
-            let result = a * b;
-            document.getElementById("result").style.color = "green";
-            document.getElementById("result").innerHTML = "Kết quả phép nhân: " + result;
-        }
+        // function phepnhan() {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let result = a * b;
+        //     document.getElementById("result").style.color = "green";
+        //     document.getElementById("result").innerHTML = "Kết quả phép nhân: " + result;
+        // }
 
-        function phepchia() {
-            let a = document.getElementById("a").value;
-            let b = document.getElementById("b").value;
-            let result = a / b;
+        // function phepchia() {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let result = a / b;
+        //     document.getElementById("result").style.color = "green";
+        //     document.getElementById("result").innerHTML = "Kết quả phép chia: " + result;
+        // }
+
+        function pheptinh(){
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let operation = arguments[0];
+            let result;
+
+            if(operation === 'cong') {
+                result = a + b;
+            } else if (operation === 'tru') {
+                result = a - b;
+            } else if (operation === 'nhan') {
+                result = a * b;
+            } else if (operation === 'chia') {
+                result = a / b;
+            }
+
             document.getElementById("result").style.color = "green";
-            document.getElementById("result").innerHTML = "Kết quả phép chia: " + result;
+            document.getElementById("result").innerHTML = "Kết quả: " + result;
         }
 
         function doiMauKetQua() {
