@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+
+    <script src="scripts.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <h2>Quản lý sản phẩm</h2>
+
+    <div>
+        <button onclick="orderProducts()">Đặt hàng</button>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>checkbox</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Hình ảnh</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody id="product-table">
+
+        </tbody>
+    </table>
+
+    <h2>Sản phẩm đã đặt</h2>
+
+    <table border="1" width="600">
+        <thead>
+            <tr>
+                <th>checkbox</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Hình ảnh</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody id="order-table">
+
+        </tbody>
+    </table>
+
+    <script>
+        var products = [];
+        var currentindex = 0;
+        var step = 3;
+        var html = "";
+        window.onload = function () {
+            loadProducts();
+        }
+
+        function loadProducts() {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "products.json", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    products = JSON.parse(this.responseText);
+                    showproducts();
+                }
+            }
+            xhr.send();
+        }
+
+        function showproducts() {
+            let table = document.getElementById("product-table");
+            let html = "";
+            products.forEach((product, index) => {
+                let row = document.createElement("tr");
+                row.insertCell(0).innerHTML = `<input type="checkbox" name="product" class="checkbox" value="${product.name}">`;
+                row.insertCell(1).innerHTML = product.name;
+                row.insertCell(2).innerHTML = product.price;
+                row.insertCell(3).innerHTML = `<img src="${product.image}" alt="${product.name}" width="100">`;
+                row.insertCell(4).innerHTML = `<input type="number" name="quantity" value="1" min="1">`;
+                html += row.outerHTML;
+            });
+            table.innerHTML = html;
+
+        }
+
+        function checkAll() {
+            let checkboxes = document.querySelectorAll(".checkbox");
+            // let checkAllCheckbox = document.getElementById('check-all');
+            checkboxes.forEach(cb => { cb.checked = checkAllCheckbox.checked });
+        }
+
+        function orderProducts() {
+            let rows = document.querySelectorAll("#product-table tr");
+            let selectProducts = [];
+            rows.forEach((row, index) => {
+                let checkbox = row.querySelector(".checkbox");
+                if (checkbox && checkbox.checked) {
+                    let quantity = row.querySelector("input[name='quantity']").value;
+                    selectProducts.push({
+                        name: products[index].name,
+                        price: products[index].price,
+                        image: products[index].image,
+                        quantity: quantity
+                    });
+                }
+            })
+
+            if (selectProducts.length == 0) {
+                alert("Vui lòng chọn sản phẩm");
+                return;
+            }
+
+            shuffleProduct(selectProducts, function (shuffle) {
+                renderProduct(shuffle).then(html => {
+                    document.getElementById("order-table").innerHTML = html;
+                });
+            });
+        }
+
+        function shuffleProduct(list, callback) {
+            let shuffle = [...list];
+            shuffle.sort(() => Math.random() - 0.5);
+            callback(shuffle);
+        }
+
+        function renderProduct(list) {
+            return new Promise((resolve, reject) => {
+                let html = "";
+                list.forEach(product => {
+                    let totalPrice = product.price * product.quantity; 
+                    html += `
+        <tr>
+          <td></td>
+          <td>${product.name}</td>
+          <td>${totalPrice} VND</td>  // display the total price
+          <td><img src="${product.image}" alt="${product.name}" width="100"></td>
+          <td>${product.quantity}</td>
+        </tr>
+      `;
+                });
+                resolve(html);
+            });
+        }
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
