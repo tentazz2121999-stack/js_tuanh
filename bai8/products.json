@@ -1,0 +1,38 @@
+[
+    {
+        "name": "iphone 14 pro max",
+        "price": 30000000,
+        "color": "black",
+        "image": "img/iphone-14-pro-max.png"
+    },
+    {
+        "name": "samsung galaxy s23 ultra",
+        "price": 25000000,
+        "color": "white",
+        "image": "img/samsung-galaxy-s23-ultra.webp"
+    },
+    {
+        "name": "xiaomi mi 13 pro",
+        "price": 20000000,
+        "color": "blue",
+        "image": "img/xiaomi-mi-13-pro.png"
+    },
+    {
+        "name": "iphone 15 pro max",
+        "price": 40000000,
+        "color": "black",
+        "image": "img/iphone-15-pro-max.jpg"
+    },
+    {
+        "name": "samsung galaxy s25 ultra",
+        "price": 35000000,
+        "color": "white",
+        "image": "img/samsung-galaxy-s23-ultra.webp"
+    },
+    {
+        "name": "xiaomi mi 14 pro",
+        "price": 20000000,
+        "color": "blue",
+        "image": "img/xiaomi-mi-14-pro.webp"
+    }
+]

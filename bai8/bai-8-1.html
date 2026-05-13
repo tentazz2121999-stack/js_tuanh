@@ -1,0 +1,77 @@
+<html>
+
+<head>
+    <title>JS</title>
+</head>
+
+<body>
+    <table border="1" width="400">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody id="cart-table"></tbody>
+    </table>
+
+    <button onclick="clearAll()">Xóa hết giỏ hàng</button>
+
+    <script>
+        // Tạo dữ liệu giỏ hàng
+        var cart = [
+            { name: "iphone 14 pro max", price: 1500, qty: 1, img: "img/iphone-14-pro-max.png" },
+            { name: "iphone 15 pro max", price: 25, qty: 2, img: "img/iphone-15-pro-max.jpg" },
+            { name: "Samsung galaxy s23 ultra", price: 70, qty: 1, img: "img/samsung-galaxy-s23-ultra.webp" }
+        ];
+        // kiểm tra card đã tồn tại chưa
+        if(localStorage.getItem("cart") == null){
+            localStorage.setItem("cart", JSON.stringify(cart));
+        } 
+        var cartData = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // // Lưu vào localStorage
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Lấy dữ liệu ra
+        var cartData = JSON.parse(localStorage.getItem("cart")) || [];
+
+        console.log(localStorage.getItem("cart"))
+
+        // Hiển thị trên table
+        function renderCart() {
+            var tableBody = document.getElementById("cart-table");
+            let html = "";
+
+            cartData.forEach((item, index) => {
+                html += `<tr>
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td><input type="number" class="qty" min="1" onchange="updateQty(${index}, this.value)" value="${item.qty}"></td>
+            <td><img src="${item.img}" alt="${item.name}" width="50"></td>
+            </tr> `;
+            });
+            tableBody.innerHTML = html;
+        }
+
+        function clearAll() {
+            localStorage.clear();
+        }
+
+        //update số lượng
+        function updateQty(index, newQty) {
+            cart[index].qty = Number(newQty);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            console.log(index);
+            console.log(newQty);
+            console.log(localStorage.getItem("cart"));
+
+        }
+        renderCart();
+
+    </script>
+
+</body>
+
+</html>

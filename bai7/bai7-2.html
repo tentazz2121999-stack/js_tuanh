@@ -41,7 +41,6 @@
     <table border="1" width="600">
         <thead>
             <tr>
-                <th>checkbox</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá</th>
                 <th>Hình ảnh</th>
@@ -130,6 +129,7 @@
             callback(shuffle);
         }
 
+
         function renderProduct(list) {
             return new Promise((resolve, reject) => {
                 let html = "";
@@ -137,9 +137,8 @@
                     let totalPrice = product.price * product.quantity; 
                     html += `
         <tr>
-          <td></td>
           <td>${product.name}</td>
-          <td>${totalPrice} VND</td>  // display the total price
+          <td>${totalPrice} VND</td>
           <td><img src="${product.image}" alt="${product.name}" width="100"></td>
           <td>${product.quantity}</td>
         </tr>
