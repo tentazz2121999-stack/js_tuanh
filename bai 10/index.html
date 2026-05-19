@@ -61,26 +61,30 @@
             </div>
         </div>
     </header>
+    <select name="sortOrder" id="sortOrder">
+        <option value="asc">Sắp xếp tăng dần</option>
+        <option value="desc">Sắp xếp giảm dần</option>
+    </select>
+    <div class="row" id="product-list">
+
+    </div>
+    <button class="btn btn-primary" id="loadmore" onclick="showmore()">Xem thêm</button>
+    <div id="loading"></div>
     <!-- Section-->
-    <section class="py-5">
+    <!-- <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/iphone-14-pro-max.png" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Iphone 14 Pro Max</a>
                                 </h5>
-                                <!-- Product price-->
                                 $40.00 - $80.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a>
                             </div>
@@ -89,19 +93,14 @@
                 </div>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Sale badge-->
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
                         </div>
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/iphone-15-pro-max.jpg" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Iphone 15 Pro Max</a>
                                 </h5>
-                                <!-- Product reviews-->
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
@@ -109,12 +108,10 @@
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
                                 </div>
-                                <!-- Product price-->
                                 <span class="text-muted text-decoration-line-through">$20.00</span>
                                 $18.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
                             </div>
@@ -123,24 +120,18 @@
                 </div>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Sale badge-->
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
                         </div>
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/samsung-galaxy-s23-ultra.webp" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Samsung Galaxy S23 Ultra</a>
                                 </h5>
-                                <!-- Product price-->
                                 <span class="text-muted text-decoration-line-through">$50.00</span>
                                 $25.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
                             </div>
@@ -149,16 +140,12 @@
                 </div>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/samsung-galaxy-s23-ultra.webp" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Samsung Galaxy S25 Ultra</a>
                                 </h5>
-                                <!-- Product reviews-->
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
@@ -166,11 +153,9 @@
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
                                 </div>
-                                <!-- Product price-->
                                 $40.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
                             </div>
@@ -179,24 +164,18 @@
                 </div>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Sale badge-->
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
                         </div>
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/xiaomi-mi-13-pro.png" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Xiaomi Mi 13 Pro</a>
                                 </h5>
-                                <!-- Product price-->
                                 <span class="text-muted text-decoration-line-through">$50.00</span>
                                 $25.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
                             </div>
@@ -205,20 +184,15 @@
                 </div>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/xiaomi-mi-14-pro.webp" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Xiaomi Mi 14 Pro</a>
                                 </h5>
-                                <!-- Product price-->
                                 $120.00 - $280.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a>
                             </div>
@@ -227,19 +201,14 @@
                 </div>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Sale badge-->
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
                         </div>
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/tecno_spark_40c_den_5_ac575c797e.webp" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Tecno Spark 40C</a>
                                 </h5>
-                                <!-- Product reviews-->
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
@@ -247,12 +216,10 @@
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
                                 </div>
-                                <!-- Product price-->
                                 <span class="text-muted text-decoration-line-through">$20.00</span>
                                 $18.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
                             </div>
@@ -261,16 +228,12 @@
                 </div>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
                         <img class="card-img-top" src="./img/honor_x9d_kem_3_36ca2bbc60.webp" alt="..." />
-                        <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <h5 class="fw-bolder">
                                     <a href="./detail.html">Honor X9d</a>
                                 </h5>
-                                <!-- Product reviews-->
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
@@ -278,11 +241,9 @@
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
                                 </div>
-                                <!-- Product price-->
                                 $40.00
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
                             </div>
@@ -291,8 +252,103 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Footer-->
+
+    <script>
+        
+        var products = [];
+        var currentindex = 0;
+        var step = 4;
+        var html = "";
+        window.onload = function () {
+            loadProducts();
+        }
+
+        function loadProducts() {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "products.json", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    products = JSON.parse(this.responseText);
+                    showproducts();
+                }
+            }
+            xhr.send();
+        }
+
+        function showproducts() {
+            let nextindex = currentindex + step;
+            let list = products.slice(currentindex, nextindex);
+            list.forEach(product => {
+                html += `
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="./detail.html">${product.name}</a>
+                        </h5>
+                        <p class="card-text">${product.price} VND</p>
+                    </div>
+                </div>
+            </div>
+            `;
+            });
+            document.getElementById("product-list").innerHTML = html;
+            currentindex = nextindex;
+        }
+
+
+        function showmore() {
+            document.getElementById("loading").innerHTML = "<img src='loading.gif' alt='Loading...'>";
+            document.getElementById("loadmore").disabled = true;
+
+            setTimeout(function () {
+                showproducts();
+
+                document.getElementById("loading").innerHTML = "";
+                document.getElementById("loadmore").disabled = false;
+
+                console.log(currentindex);
+                console.log(currentindex >= products.length)
+
+                if (currentindex >= products.length) {
+                    document.getElementById("loadmore").style.display = "none";
+                    document.getElementById("loading").innerHTML += "<p>Đã hết sản phẩm để hiển thị</p>";
+                }
+            }, 2000);
+        }
+        function displayProducts(list) {
+            let html = "";
+            list.forEach(product => {
+                html += `
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="./detail.html">${product.name}</a>
+                    </h5>
+                    <p class="card-text">${product.price} VND</p>
+                </div>
+            </div>
+        </div>
+        `;
+            });
+            document.getElementById("product-list").innerHTML = html;
+        }
+        document.getElementById("sortOrder").addEventListener("change", function () {
+            let sortedProducts = [...products];
+            if (this.value === "asc") {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            }
+            displayProducts(sortedProducts);
+        });
+        
+    </script>
     <footer class="py-5 bg-dark">
         <div class="row footer-content m-0 text-white">
             <div class="col-md-4">

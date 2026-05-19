@@ -1,0 +1,50 @@
+[
+    {
+        "name": "iphone 14 pro max",
+        "price": 30000000,
+        "color": "black",
+        "image": "img/iphone-14-pro-max.png"
+    },
+    {
+        "name": "samsung galaxy s23 ultra",
+        "price": 25000000,
+        "color": "white",
+        "image": "img/samsung-galaxy-s23-ultra.webp"
+    },
+    {
+        "name": "xiaomi mi 13 pro",
+        "price": 20000000,
+        "color": "blue",
+        "image": "img/xiaomi-mi-13-pro.png"
+    },
+    {
+        "name": "iphone 15 pro max",
+        "price": 40000000,
+        "color": "black",
+        "image": "img/iphone-15-pro-max.jpg"
+    },
+    {
+        "name": "samsung galaxy s25 ultra",
+        "price": 35000000,
+        "color": "white",
+        "image": "img/samsung-galaxy-s23-ultra.webp"
+    },
+    {
+        "name": "xiaomi mi 14 pro",
+        "price": 20000000,
+        "color": "blue",
+        "image": "img/xiaomi-mi-14-pro.webp"
+    },
+    {
+        "name": "Tecno Spark 40C",
+        "price": 35000000,
+        "color": "Black",
+        "image": "img/tecno_spark_40c_den_5_ac575c797e.webp"
+    },
+    {
+        "name": "Honor X9d",
+        "price": 20000000,
+        "color": "Gold",
+        "image": "img/honor_x9d_kem_3_36ca2bbc60.webp"
+    }
+]
