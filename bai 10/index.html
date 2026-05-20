@@ -42,11 +42,11 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <button class="btn btn-outline-dark" type="submit">
+                    <a href="/bai 10/cart.html" class="btn btn-outline-dark position-relative">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
+                        <span id="cart-count" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </a>
                 </form>
             </div>
         </div>
@@ -256,14 +256,24 @@
     <!-- Footer-->
 
     <script>
-        
         var products = [];
         var currentindex = 0;
         var step = 4;
-        var html = "";
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
         window.onload = function () {
+            // Kiểm tra các element quan trọng
+            if (!document.getElementById("product-list")) {
+                console.error("❌ Không tìm thấy #product-list trong HTML!");
+                return;
+            }
             loadProducts();
-        }
+
+            const sortSelect = document.getElementById("sortOrder");
+            if (sortSelect) {
+                sortSelect.addEventListener("change", sortProducts);
+            }
+        };
 
         function loadProducts() {
             let xhr = new XMLHttpRequest();
@@ -272,82 +282,157 @@
                 if (xhr.status === 200) {
                     products = JSON.parse(this.responseText);
                     showproducts();
+                } else {
+                    console.error("Lỗi tải products.json");
                 }
-            }
+            };
             xhr.send();
         }
 
         function showproducts() {
             let nextindex = currentindex + step;
             let list = products.slice(currentindex, nextindex);
-            list.forEach(product => {
-                html += `
-            <div class="col-md-3">
-                <div class="card mb-3">
-                    <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="./detail.html">${product.name}</a>
-                        </h5>
-                        <p class="card-text">${product.price} VND</p>
-                    </div>
-                </div>
-            </div>
-            `;
-            });
-            document.getElementById("product-list").innerHTML = html;
+            displayProducts(list);
             currentindex = nextindex;
         }
 
-
-        function showmore() {
-            document.getElementById("loading").innerHTML = "<img src='loading.gif' alt='Loading...'>";
-            document.getElementById("loadmore").disabled = true;
-
-            setTimeout(function () {
-                showproducts();
-
-                document.getElementById("loading").innerHTML = "";
-                document.getElementById("loadmore").disabled = false;
-
-                console.log(currentindex);
-                console.log(currentindex >= products.length)
-
-                if (currentindex >= products.length) {
-                    document.getElementById("loadmore").style.display = "none";
-                    document.getElementById("loading").innerHTML += "<p>Đã hết sản phẩm để hiển thị</p>";
-                }
-            }, 2000);
-        }
         function displayProducts(list) {
+            const container = document.getElementById("product-list");
+            if (!container) return;
+
             let html = "";
             list.forEach(product => {
                 html += `
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a href="./detail.html">${product.name}</a>
-                    </h5>
-                    <p class="card-text">${product.price} VND</p>
-                </div>
-            </div>
-        </div>
-        `;
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <img src="${product.image || product.img}" class="card-img-top" alt="${product.name}" 
+                            style="height: 200px; object-fit: contain;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text mt-auto">${Number(product.price).toLocaleString('vi-VN')} VND</p>
+                            <button class="btn btn-primary mt-2 add-to-cart" data-id="${product.id || product.name}">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
             });
-            document.getElementById("product-list").innerHTML = html;
+
+            container.innerHTML = html;
+            attachAddToCartEvents();
         }
-        document.getElementById("sortOrder").addEventListener("change", function () {
-            let sortedProducts = [...products];
-            if (this.value === "asc") {
-                sortedProducts.sort((a, b) => a.price - b.price);
+
+        function attachAddToCartEvents() {
+            document.querySelectorAll(".add-to-cart").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    addToCart(this.dataset.id);
+                });
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => (p.id && p.id == productId) || p.name === productId);
+            if (!product) return alert("Không tìm thấy sản phẩm!");
+
+            const existing = cart.find(item => item.name === product.name);
+            if (existing) {
+                existing.qty += 1;
             } else {
-                sortedProducts.sort((a, b) => b.price - a.price);
+                cart.push({ ...product, qty: 1, checked: false, img: product.image || product.img });
             }
-            displayProducts(sortedProducts);
-        });
-        
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert(product.name + " đã thêm vào giỏ hàng!");
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((a, b) => a + (b.qty || 1), 0);
+            const badge = document.getElementById("cart-count");
+            if (badge) badge.textContent = count;
+        }
+
+        function showmore() {
+            const btn = document.getElementById("loadmore");
+            const loading = document.getElementById("loading");
+
+            if (btn) btn.disabled = true;
+            if (loading) loading.innerHTML = "Đang tải thêm...";
+
+            setTimeout(() => {
+                let nextindex = currentindex + step;
+                let moreProducts = products.slice(currentindex, nextindex);
+
+                console.log(`Đang load từ index ${currentindex} đến ${nextindex}`);
+                console.log(`Số sản phẩm còn lại: ${moreProducts.length}`);
+
+                if (moreProducts.length === 0) {
+                    if (btn) btn.style.display = "none";
+                    if (loading) loading.innerHTML = "<p style='color: gray;'>Đã hiển thị hết sản phẩm</p>";
+                    return;
+                }
+
+                let currentHtml = document.getElementById("product-list").innerHTML;
+
+                moreProducts.forEach(product => {
+                    currentHtml += `
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <img src="${product.image || product.img}" class="card-img-top" alt="${product.name}" 
+                                style="height: 200px; object-fit: contain;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text mt-auto">${Number(product.price).toLocaleString('vi-VN')} VND</p>
+                                <button class="btn btn-primary mt-2 add-to-cart" data-id="${product.id || product.name}">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+
+                document.getElementById("product-list").innerHTML = currentHtml;
+                currentindex = nextindex;
+
+                attachAddToCartEvents();
+
+                if (loading) loading.innerHTML = "";
+                if (btn) btn.disabled = false;
+
+                // Ẩn nút nếu hết sản phẩm
+                if (currentindex >= products.length && btn) {
+                    btn.style.display = "none";
+                }
+            }, 600);
+        }
+        function sortProducts() {
+            if (products.length === 0) return;
+
+            let sortedProducts = [...products];
+
+            // Sắp xếp
+            if (this.value === "asc") {
+                sortedProducts.sort((a, b) => Number(a.price) - Number(b.price));
+            } else {
+                sortedProducts.sort((a, b) => Number(b.price) - Number(a.price));
+            }
+
+            products = sortedProducts;
+
+            let currentlyLoaded = currentindex;
+
+            currentindex = 0;
+
+            let toShow = products.slice(0, currentlyLoaded);
+            displayProducts(toShow);
+
+            currentindex = currentlyLoaded;
+
+            const btn = document.getElementById("loadmore");
+            if (currentindex >= products.length && btn) {
+                btn.style.display = "none";
+            }
+        }
     </script>
     <footer class="py-5 bg-dark">
         <div class="row footer-content m-0 text-white">
@@ -387,7 +472,7 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <!-- <script src="js/scripts.js"></script> -->
 </body>
 
 </html>

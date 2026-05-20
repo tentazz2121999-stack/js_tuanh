@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Giỏ hàng - Điện thoại</title>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS -->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <a href="cart.html" class="btn btn-outline-dark position-relative">
+                    <i class="bi-cart-fill me-1"></i>
+                    Giỏ hàng
+                    <span id="cart-count" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container px-4 px-lg-5 my-5">
+        <h2 class="mb-4">Giỏ hàng của bạn</h2>
+
+        <table class="table table-bordered table-hover" id="cart-table">
+            <thead class="table-dark">
+                <tr>
+                    <th><input type="checkbox" id="checkAll" onchange="toggleCheckAll()"></th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="cart-body"></tbody>
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+                <button class="btn btn-danger" onclick="clearAll()">Xóa hết giỏ hàng</button>
+                <button class="btn btn-warning" onclick="deleteSelected()">Xóa các mặt hàng đã chọn</button>
+            </div>
+            <div class="text-end">
+                <h4>Tổng tiền: <span id="total" class="text-danger">0 VND</span></h4>
+                <button class="btn btn-success btn-lg mt-2" onclick="checkout()">Thanh toán</button>
+            </div>
+        </div>
+
+        <div id="cart-empty" class="text-center py-5 d-none">
+            <h3>Giỏ hàng trống</h3>
+            <a href="index.html" class="btn btn-primary mt-3">Tiếp tục mua sắm</a>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function renderCart() {
+            const tbody = document.getElementById("cart-body");
+            const cartEmpty = document.getElementById("cart-empty");
+            let html = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartEmpty.classList.remove("d-none");
+                document.getElementById("cart-table").style.display = "none";
+                updateCartCount();
+                return;
+            } else {
+                cartEmpty.classList.add("d-none");
+                document.getElementById("cart-table").style.display = "table";
+            }
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+
+                html += `
+                    <tr>
+                        <td><input type="checkbox" ${item.checked ? "checked" : ""} onchange="toggleItem(${index}, this.checked)"></td>
+                        <td><img src="${item.img || item.image}" alt="${item.name}" width="60"></td>
+                        <td>${item.name}</td>
+                        <td>${item.price.toLocaleString('vi-VN')} VND</td>
+                        <td>
+                            <input type="number" class="form-control" style="width: 80px;" 
+                                   min="1" value="${item.qty}" 
+                                   onchange="updateQty(${index}, this.value)">
+                        </td>
+                        <td><strong>${itemTotal.toLocaleString('vi-VN')} VND</strong></td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>`;
+            });
+
+            tbody.innerHTML = html;
+            document.getElementById("total").textContent = total.toLocaleString('vi-VN') + " VND";
+            updateCartCount();
+        }
+
+        function updateQty(index, newQty) {
+            cart[index].qty = parseInt(newQty) || 1;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        function toggleItem(index, checked) {
+            cart[index].checked = checked;
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+
+        function toggleCheckAll() {
+            const isChecked = document.getElementById("checkAll").checked;
+            cart.forEach(item => item.checked = isChecked);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        function deleteSelected() {
+            if (confirm("Xóa các sản phẩm đã chọn?")) {
+                cart = cart.filter(item => !item.checked);
+                localStorage.setItem("cart", JSON.stringify(cart));
+                renderCart();
+            }
+        }
+
+        function removeItem(index) {
+            if (confirm("Xóa sản phẩm này khỏi giỏ hàng?")) {
+                cart.splice(index, 1);
+                localStorage.setItem("cart", JSON.stringify(cart));
+                renderCart();
+            }
+        }
+
+        function clearAll() {
+            if (confirm("Xóa toàn bộ giỏ hàng?")) {
+                cart = [];
+                localStorage.setItem("cart", JSON.stringify(cart));
+                renderCart();
+            }
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+            const badge = document.getElementById("cart-count");
+            if (badge) badge.textContent = count;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Giỏ hàng trống!");
+                return;
+            }
+            alert("Cảm ơn bạn đã mua hàng! Chức năng thanh toán đang được phát triển.");
+        }
+
+        // Khởi tạo khi load trang
+        window.onload = renderCart;
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
