@@ -338,7 +338,11 @@
             if (existing) {
                 existing.qty += 1;
             } else {
-                cart.push({ ...product, qty: 1, checked: false, img: product.image || product.img });
+                cart.push({ 
+                    ...product, 
+                    qty: 1, 
+                    checked: true, 
+                    img: product.image || product.img });
             }
 
             localStorage.setItem("cart", JSON.stringify(cart));
