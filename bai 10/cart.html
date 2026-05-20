@@ -68,112 +68,115 @@
     </div>
 
     <script>
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = [];
 
-        function renderCart() {
-            const tbody = document.getElementById("cart-body");
-            const cartEmpty = document.getElementById("cart-empty");
-            let html = "";
-            let total = 0;
+    function loadCart() {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+    }
 
-            if (cart.length === 0) {
-                cartEmpty.classList.remove("d-none");
-                document.getElementById("cart-table").style.display = "none";
-                updateCartCount();
-                return;
-            } else {
-                cartEmpty.classList.add("d-none");
-                document.getElementById("cart-table").style.display = "table";
-            }
+    function saveCart() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
 
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.qty;
-                total += itemTotal;
+    function renderCart() {
+        loadCart();   // Luôn load lại mới nhất
+        const tbody = document.getElementById("cart-body");
+        const cartEmpty = document.getElementById("cart-empty");
+        let html = "";
+        let total = 0;
 
-                html += `
-                    <tr>
-                        <td><input type="checkbox" ${item.checked ? "checked" : ""} onchange="toggleItem(${index}, this.checked)"></td>
-                        <td><img src="${item.img || item.image}" alt="${item.name}" width="60"></td>
-                        <td>${item.name}</td>
-                        <td>${item.price.toLocaleString('vi-VN')} VND</td>
-                        <td>
-                            <input type="number" class="form-control" style="width: 80px;" 
-                                   min="1" value="${item.qty}" 
-                                   onchange="updateQty(${index}, this.value)">
-                        </td>
-                        <td><strong>${itemTotal.toLocaleString('vi-VN')} VND</strong></td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>`;
-            });
-
-            tbody.innerHTML = html;
-            document.getElementById("total").textContent = total.toLocaleString('vi-VN') + " VND";
+        if (cart.length === 0) {
+            cartEmpty.classList.remove("d-none");
+            document.getElementById("cart-table").style.display = "none";
             updateCartCount();
+            return;
         }
 
-        function updateQty(index, newQty) {
-            cart[index].qty = parseInt(newQty) || 1;
-            localStorage.setItem("cart", JSON.stringify(cart));
+        cartEmpty.classList.add("d-none");
+        document.getElementById("cart-table").style.display = "table";
+
+        cart.forEach((item, index) => {
+            const price = Number(item.price) || 0;
+            const qty = Number(item.qty) || 1;
+            const itemTotal = price * qty;
+            total += itemTotal;
+
+            html += `
+                <tr>
+                    <td><input type="checkbox" ${item.checked ? "checked" : ""} onchange="toggleItem(${index}, this.checked)"></td>
+                    <td><img src="${item.img || item.image || ''}" alt="${item.name}" width="60"></td>
+                    <td>${item.name}</td>
+                    <td>${price.toLocaleString('vi-VN')} VND</td>
+                    <td>
+                        <input type="number" class="form-control" style="width: 80px;" 
+                               min="1" value="${qty}" onchange="updateQty(${index}, this.value)">
+                    </td>
+                    <td><strong>${itemTotal.toLocaleString('vi-VN')} VND</strong></td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>`;
+        });
+
+        tbody.innerHTML = html;
+        document.getElementById("total").textContent = total.toLocaleString('vi-VN') + " VND";
+        updateCartCount();
+    }
+
+    function updateQty(index, newQty) {
+        cart[index].qty = parseInt(newQty) || 1;
+        saveCart();
+        renderCart();
+    }
+
+    function toggleItem(index, checked) {
+        cart[index].checked = checked;
+        saveCart();
+    }
+
+    function toggleCheckAll() {
+        const isChecked = document.getElementById("checkAll").checked;
+        cart.forEach(item => item.checked = isChecked);
+        saveCart();
+        renderCart();
+    }
+
+    function deleteSelected() {
+        if (confirm("Xóa các sản phẩm đã chọn?")) {
+            cart = cart.filter(item => !item.checked);
+            saveCart();
             renderCart();
         }
+    }
 
-        function toggleItem(index, checked) {
-            cart[index].checked = checked;
-            localStorage.setItem("cart", JSON.stringify(cart));
-        }
-
-        function toggleCheckAll() {
-            const isChecked = document.getElementById("checkAll").checked;
-            cart.forEach(item => item.checked = isChecked);
-            localStorage.setItem("cart", JSON.stringify(cart));
+    function removeItem(index) {
+        if (confirm("Xóa sản phẩm này?")) {
+            cart.splice(index, 1);
+            saveCart();
             renderCart();
         }
+    }
 
-        function deleteSelected() {
-            if (confirm("Xóa các sản phẩm đã chọn?")) {
-                cart = cart.filter(item => !item.checked);
-                localStorage.setItem("cart", JSON.stringify(cart));
-                renderCart();
-            }
+    function clearAll() {
+        if (confirm("Xóa toàn bộ giỏ hàng?")) {
+            cart = [];
+            localStorage.removeItem("cart");
+            saveCart();
+            renderCart();
         }
+    }
 
-        function removeItem(index) {
-            if (confirm("Xóa sản phẩm này khỏi giỏ hàng?")) {
-                cart.splice(index, 1);
-                localStorage.setItem("cart", JSON.stringify(cart));
-                renderCart();
-            }
-        }
+    function updateCartCount() {
+        const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+        const badge = document.getElementById("cart-count");
+        if (badge) badge.textContent = count;
+    }
 
-        function clearAll() {
-            if (confirm("Xóa toàn bộ giỏ hàng?")) {
-                cart = [];
-                localStorage.setItem("cart", JSON.stringify(cart));
-                renderCart();
-            }
-        }
-
-        function updateCartCount() {
-            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-            const badge = document.getElementById("cart-count");
-            if (badge) badge.textContent = count;
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert("Giỏ hàng trống!");
-                return;
-            }
-            alert("Cảm ơn bạn đã mua hàng! Chức năng thanh toán đang được phát triển.");
-        }
-
-        // Khởi tạo khi load trang
-        window.onload = renderCart;
-    </script>
+    // Khởi tạo
+    document.addEventListener("DOMContentLoaded", renderCart);
+</script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
